@@ -1,0 +1,43 @@
+.clip {
+  height: 100vh;
+  overflow: hidden;
+  background-color: #000;
+}
+.clip-wrapp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .img {
+    position: absolute;
+  }
+  .img-canvas {
+    position: fixed;
+    left: 0;
+    top: 9999999999rpx;
+  }
+}
+
+.canvas-wrapp {
+  position: relative;
+  .move_item {
+    z-index:100;
+    opacity: 0.5;
+    background:black;
+    border-radius:50%;
+    border: 2px solid #fff;
+  }
+}
+.move-canvas{
+  width: 100%;
+  height: 100%;
+}
+.bottom-btn {
+  background-color: #fff;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  button {
+    width: 40%;
+  }
+}

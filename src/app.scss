@@ -1,0 +1,23 @@
+.fl-col-40 {
+  -webkit-flex: 0 0 40%;
+      -ms-flex: 0 0 40%;
+          flex: 0 0 40%;
+  -webkit-box-flex: 0;
+  max-width: 40%;
+}
+.fl-col-20 {
+  -webkit-flex: 0 0 20%;
+      -ms-flex: 0 0 20%;
+          flex: 0 0 20%;
+  -webkit-box-flex: 0;
+  max-width: 20%;
+
+}
+button {
+  outline: none;
+  background-color: rgba(0,0,0,0);
+  border-radius: 0;
+  &:after {
+    display: none;
+  }
+}

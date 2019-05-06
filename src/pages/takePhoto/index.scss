@@ -1,0 +1,136 @@
+.camera {
+  width: 100%; 
+  height: 100vh;
+  overflow: hidden;
+}
+.camera_wrapp {
+  height: 100%;
+}
+.camera_mask {
+  height: 100%;
+  .camera_mask_lr,
+  .camera_mask_tb {
+    height: 100%;
+    background-color: rgba(55, 55, 55, 0.7);
+    position: relative;
+  }
+  .album_btn{
+    position: absolute;
+    bottom: 4%;
+    left: 0;
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%;
+    .album_btn_img {
+      width: 30%;
+      height: 30%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) rotateZ(90deg);
+      transform-origin: center center;
+    }
+  }
+  .camera_tips {
+    background-color: transparent;
+    position: absolute;
+    left: 80px;
+    top: 10%;
+    transform: rotateZ(90deg);
+    transform-origin: left top;
+    color: #fff;
+    font-size: 40px;
+    line-height: 1.1;
+  }
+  .camera_mask_m {
+    height: 100%;
+    .camera_mask_tb {
+      width: 100%;
+      flex: 10;
+    }
+    .camera_view_box {
+      flex: 80;
+      width: 100%;
+      position: relative;
+      .camera_view_line {
+        position: absolute;
+        background-color: transparent;
+        background-color: #8bc34a;
+        &:nth-child(4n + 1) {
+          top: 0;
+          left: 0;
+        }
+        &:nth-child(4n + 2) {
+          top: 0;
+          right: 0;
+        }
+        &:nth-child(4n + 3) {
+          bottom: 0;
+          right: 0;
+        }
+        &:nth-child(4n + 4) {
+          bottom: 0;
+          left: 0;
+        }
+      }
+      .camera_view_line_h {
+        width: 40px;
+        padding-bottom: 4px;
+      }
+      .camera_view_line_v {
+        width: 4px;
+        height: 40px;
+      }
+    }
+    .camera_btn {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 0;
+      padding-bottom: 100%;
+      .camera_btn_img {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) rotateZ(90deg);
+        transform-origin: center center;
+        width: 60%;
+        height: 60%;
+      }
+    }
+  }
+}
+
+.side_bar {
+  width: 100%;
+  height: 20%;
+  background-color: #f40;
+}
+.photo_canvas {
+  position: fixed;
+  left: 1000rpx;
+  top: 110vh;
+}
+
+.fl_row {
+  display: flex;
+}
+.fl_col {
+  display: flex;
+  flex-direction: column;
+}
+.fl_col_40 {
+  flex: 40;
+  max-width: 40%;
+}
+.fl_col_20 {
+  flex: 20;
+  max-width: 20%;
+}
+button {
+  outline: none;
+  &:after {
+    display: none;
+  }
+}
