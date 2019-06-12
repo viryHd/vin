@@ -12,7 +12,8 @@ import { getVinCode } from "../../service/getVinCode";
 
 export default class TakePhoto extends Component {
   config = {
-    navigationBarTitleText: "拍照"
+    navigationBarTitleText: "拍照",
+    pageOrientation: "auto",
   };
   state = {
     cameraBtn: require("../../assets/camera.png"),
@@ -114,6 +115,7 @@ export default class TakePhoto extends Component {
     return (
       <View className="camera">
         <View className="camera_wrapp">
+          {/* 不授权会白屏，camera组件里面最好不要有东西 */}
           <Camera
             device-position="back"
             flash="off"
