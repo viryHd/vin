@@ -94,19 +94,20 @@ export default class InputKeyboard extends Component {
     Taro.getClipboardData().then(res => {
       // 当粘贴的时候
       console.log("粘贴", res);
+      const str = res.data.replace(/\s*/g,"")
       const maxlength = this.state.maxlength;
-      const length = res.data.length;
+      const length = str.length;
       if (length >= maxlength) {
         this.setState((state, props) => {
           return {
-            valueList: res.data.slice(0, maxlength).split(""),
+            valueList: str.slice(0, maxlength).split(""),
             cursorIndex: maxlength
           };
         });
       } else {
         this.setState((state, props) => {
           return {
-            valueList: res.data.split(""),
+            valueList: str.split(""),
             cursorIndex: length
           };
         });
