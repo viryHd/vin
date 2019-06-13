@@ -1,69 +1,8 @@
-.vin_inquire {
-  height: 100vh;
-  .input_value {
-    height: 90px;
-    color: #0a0a0a;
-    display: flex;
-    align-items: center;
-    // margin: 0 32px;
-    // padding-left: 30px;
-    border-radius: 45px;
-    border: 1px solid #377CFF;
-    font-family: "Courier New", Courier, monospace;
-  }
-  .input_value_wrapper {
-    text-align: center;
+.vin_inquire{
+  .input_box{
+    
   }
 }
-.input_value_focus {
-  position: relative;
-}
-.placeholder {
-  color: #bdc3c7;
-}
-.keyboard_cursor_area{
-  position: absolute;
-  // margin-left: 30px;
-  height: 200%;
-  left: 0;
-  top: 0;
-}
-.keyboard_cursor {
-  position: absolute;
-  top: 71px;
-  left: 0;
-  background-color: #eee;
-  transform: translate(-50%) !important;
-  width: 40px;
-  height: 60px;
-}
-.keyboard_cursor_btn {
-  position: absolute;
-  left: 0px;
-  top: 0;
-  width: 40px;
-  height: 100%;
-  background-color: #f00;
-}
-.keyboard_cursor_line {
-  position: absolute;
-  top: 0;
-  left: 20px;
-  transform: translateY(-100%);
-  width: 4px;
-  height: 50px;
-  background-color: #377CFF;
-  border-radius: 2px;
-  animation: blinking 1s ease-in-out infinite;
-}
-@keyframes blinking {
-  0%,
-  100% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-.keyboard_cursor_btn {
+.value{
+  height: 300px;
 }

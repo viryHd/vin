@@ -1,7 +1,7 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import "./index.scss";
-export default class KeyBoard extends Component {
+export default class KeyBoardCom extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,21 +15,10 @@ export default class KeyBoard extends Component {
   static defaultProps = {};
   tapKeyboard = e => {
     const keyid = e.target.dataset.keyid;
-    let valueList = this.props.valueList;
-    let cursorIndex = this.props.cursorIndex;
-    console.log(valueList, cursorIndex);
-    if (keyid === "delete" && valueList.length) {
-      valueList.splice(cursorIndex, 1);
-      cursorIndex -= 1;
-    } else {
-      if (cursorIndex == valueList.length) {
-        valueList.push(keyid);
-      } else {
-        valueList.splice(cursorIndex, 0, keyid);
-      }
-      cursorIndex += 1;
-    }
-    this.props.onInputChange(valueList, cursorIndex);
+    this.props.onInputChange(keyid);
+  };
+  keyboardBlur = () => {
+    this.props.onInputChange("up");
   };
   stopProp = e => {
     e.stopPropagation();
@@ -46,16 +35,27 @@ export default class KeyBoard extends Component {
     const { number, letterFirstRow, letterSecRow, letterThirdRow } = this.state;
     return (
       <View className="keyboard" onClick={this.stopProp}>
-        <View className="keyboard_mask" />
+        <View className="keyboard_mask" onClick={this.keyboardBlur} />
         <View className="keyboard_content">
-          <View
-            data-keyid="confirm"
-            className="keyboard_item keyboard_confirm"
-            hoverClass="keyboard_item_hover"
-            hoverStayTime={50}
-            onClick={this.tapKeyboard}
-          >
-            确认
+          <View className="keyboard_handle">
+            <View
+              data-keyid="confirm"
+              className="keyboard_item keyboard_confirm"
+              hoverClass="keyboard_item_hover"
+              hoverStayTime={50}
+              onClick={this.tapKeyboard}
+            >
+              查询
+            </View>
+            <View
+              data-keyid="up"
+              className="keyboard_item keyboard_up"
+              hoverClass="keyboard_item_hover"
+              hoverStayTime={50}
+              onClick={this.tapKeyboard}
+            >
+              收起
+            </View>
           </View>
           {/* 数字 */}
           <View className="keyboard_item_content">
