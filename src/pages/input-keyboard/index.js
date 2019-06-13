@@ -1,5 +1,11 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Text, MovableArea, MovableView } from "@tarojs/components";
+import {
+  View,
+  Text,
+  MovableArea,
+  MovableView,
+  Image
+} from "@tarojs/components";
 import KeyBoardCom from "./component";
 import "./index.scss";
 export default class InputKeyboard extends Component {
@@ -9,6 +15,8 @@ export default class InputKeyboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      searchBtnIcon: require("./images/search_btn.png"),
+      clearBtnIcon: require("./images/clear_btn.png"),
       isFocus: false,
       value: "",
       valueList: [],
@@ -200,6 +208,18 @@ export default class InputKeyboard extends Component {
       return i;
     }
   };
+  clearInput = e => {
+    e.stopPropagation();
+    this.setState({
+      valueList: [],
+      cursorIndex: 0,
+      showCursor: true,
+      showClipboard: false
+    });
+  };
+  takePhoto = () => {
+    this.props.onTakePhoto();
+  };
   init = () => {
     this.setState({
       isFocus: false,
@@ -220,6 +240,8 @@ export default class InputKeyboard extends Component {
   componentDidShow() {}
   render() {
     const {
+      searchBtnIcon,
+      clearBtnIcon,
       isFocus,
       showCursor,
       valueList,
@@ -233,92 +255,109 @@ export default class InputKeyboard extends Component {
     return (
       <View className="keyboard_input_box">
         <View className="keyboard_box" onClick={this.hideKeyboard}>
-          {!isFocus ? (
-            <View
-              className="input_value"
-              style={`margin:0 ${textWidth}px;padding-left: ${textWidth}px;`}
-              onClick={this.showKeyboard}
-            >
-              {valueList.length ? (
-                valueList.map(item => (
+          <View className="search_box" style={`margin:0 ${textWidth}px;`}>
+            {!isFocus ? (
+              <View
+                className="input_value"
+                style={`padding-left: ${textWidth}px;`}
+                onClick={this.showKeyboard}
+              >
+                {valueList.length ? (
+                  valueList.map(item => (
+                    <Text
+                      key={item}
+                      data-keyid={item}
+                      className="input_value_wrapper"
+                      style={`width:${textWidth}px;`}
+                    >
+                      {item}
+                    </Text>
+                  ))
+                ) : (
+                  <Text className="placeholder">请输入或扫描车架号</Text>
+                )}
+              </View>
+            ) : (
+              <View
+                className="input_value input_value_focus"
+                style={`padding-left: ${textWidth}px;`}
+                onClick={this.showKeyboard}
+                onLongPress={this.longPressClipboard}
+              >
+                {showClipboard && (
+                  <View className="clipboard">
+                    <View
+                      className="clipboard_btn"
+                      hoverClass="clipboard_btn_hover"
+                      hoverStayTime={50}
+                      onClick={this.copyValue}
+                    >
+                      复制
+                    </View>
+                    <View
+                      className="clipboard_btn"
+                      hoverClass="clipboard_btn_hover"
+                      hoverStayTime={50}
+                      onClick={this.pasteValue}
+                    >
+                      粘贴
+                    </View>
+                  </View>
+                )}
+                {valueList.map(item => (
+                  // 光标激活状态可复制粘贴,且value高亮
                   <Text
                     key={item}
                     data-keyid={item}
-                    className="input_value_wrapper"
+                    className={`input_value_wrapper ${highlight &&
+                      "highlight"}`}
                     style={`width:${textWidth}px;`}
                   >
                     {item}
                   </Text>
-                ))
-              ) : (
-                <Text className="placeholder">请输入VIN码</Text>
-              )}
-            </View>
-          ) : (
-            <View
-              className="input_value input_value_focus"
-              style={`margin:0 ${textWidth}px;padding-left: ${textWidth}px;`}
-              onClick={this.showKeyboard}
-              onLongPress={this.longPressClipboard}
-            >
-              {showClipboard && (
-                <View className="clipboard">
-                  <View
-                    className="clipboard_btn"
-                    hoverClass="clipboard_btn_hover"
-                    hoverStayTime={50}
-                    onClick={this.copyValue}
-                  >
-                    复制
+                ))}
+                {// focus状态且有value,右边有叉叉
+                isFocus && valueList.length ? (
+                  <View className="input_clear">
+                    <Image
+                      className="clear_btn_img"
+                      src={clearBtnIcon}
+                      onClick={this.clearInput}
+                    />
                   </View>
-                  <View
-                    className="clipboard_btn"
-                    hoverClass="clipboard_btn_hover"
-                    hoverStayTime={50}
-                    onClick={this.pasteValue}
-                  >
-                    粘贴
-                  </View>
-                </View>
-              )}
-              {valueList.map(item => (
-                // 光标激活状态可复制粘贴,且value高亮
-                <Text
-                  key={item}
-                  data-keyid={item}
-                  className={`input_value_wrapper ${highlight && "highlight"}`}
-                  style={`width:${textWidth}px;`}
+                ) : null}
+                <MovableArea
+                  className="keyboard_cursor_area"
+                  style={`width:${textWidth *
+                    cursorIndex}px;margin-left: ${textWidth}px;`}
                 >
-                  {item}
-                </Text>
-              ))}
-              <MovableArea
-                className="keyboard_cursor_area"
-                style={`width:${textWidth *
-                  cursorIndex}px;margin-left: ${textWidth}px;`}
-              >
-                {!showCursor ? null : !movableCursor ? (
-                  <View
-                    className="keyboard_cursor_line line_unmove"
-                    style={`left:${textWidth * cursorIndex}px;`}
-                  />
-                ) : (
-                  <MovableView
-                    className="keyboard_cursor"
-                    direction="horizontal"
-                    animation={false}
-                    x={textWidth * cursorIndex}
-                    style={`left:${textWidth * cursorIndex}px;`}
-                    onTouchmove={this.ctrlCursorPoint}
-                    onTouchend={this.ctrlCursorPoint}
-                  >
-                    <View className="keyboard_cursor_line" />
-                    <View className="keyboard_cursor_btn" />
-                  </MovableView>
-                )}
-              </MovableArea>
+                  {!showCursor ? null : !movableCursor ? (
+                    <View
+                      className="keyboard_cursor_line line_unmove"
+                      style={`left:${textWidth * cursorIndex}px;`}
+                    />
+                  ) : (
+                    <MovableView
+                      className="keyboard_cursor"
+                      direction="horizontal"
+                      animation={false}
+                      x={textWidth * cursorIndex}
+                      style={`left:${textWidth * cursorIndex}px;`}
+                      onTouchmove={this.ctrlCursorPoint}
+                      onTouchend={this.ctrlCursorPoint}
+                    >
+                      <View className="keyboard_cursor_line" />
+                      <View className="keyboard_cursor_btn" />
+                    </MovableView>
+                  )}
+                </MovableArea>
+              </View>
+            )}
+
+            <View className="search_btn" onClick={this.takePhoto}>
+              <Image className="search_btn_img" src={searchBtnIcon} />
             </View>
-          )}
+          </View>
           <View className="input_length">
             已输入<Text style="color:#ea606a;">{valueList.length}</Text>/
             {maxlength}

@@ -1,7 +1,5 @@
 import Taro, { Component } from "@tarojs/taro";
-import {
-  View
-} from "@tarojs/components";
+import { View } from "@tarojs/components";
 import InputKeyboard from "../input-keyboard";
 import "./index.scss";
 export default class Index extends Component {
@@ -18,15 +16,20 @@ export default class Index extends Component {
     console.log(value);
     this.setState({ value });
   };
+  takePhoto = () => {
+    Taro.navigateTo({url:"../takePhoto/index"})
+  };
   componentDidMount() {}
   componentDidShow() {}
   render() {
-    const {value} = this.state;
+    const { value } = this.state;
     return (
       <View className="vin_inquire">
         <View className="input_box">
-
-        <InputKeyboard onGetValue={value => this.getValue(value)} />
+          <InputKeyboard
+            onTakePhoto={() => this.takePhoto()}
+            onGetValue={value => this.getValue(value)}
+          />
         </View>
         <View className="value">{value}</View>
         <View className="value">这些是内容填充</View>

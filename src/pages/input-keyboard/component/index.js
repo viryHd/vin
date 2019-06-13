@@ -36,7 +36,7 @@ export default class KeyBoardCom extends Component {
     return (
       <View className="keyboard" onClick={this.stopProp}>
         <View className="keyboard_mask" onClick={this.keyboardBlur} />
-        <View className="keyboard_content">
+        <View className="keyboard_content" onTouchMove={this.stopProp}>
           <View className="keyboard_handle">
             <View
               data-keyid="confirm"
